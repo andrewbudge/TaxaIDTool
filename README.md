@@ -1,7 +1,5 @@
 # TaxaIDTool
 
-# TaxaIDTool
-
 #### TaxaIDTool is a C++ program designed for Bioinformatics pipelines. It manipulates the sequence ID's in fasta files by either renaming the ID's or removing ID's and their associated sequences.
 
 ## **Installation**
