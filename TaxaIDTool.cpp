@@ -53,7 +53,7 @@ void processFasta(const string& inputFile, const string& outputFile,
             string header = line.substr(1);
             isHeader = true;
             if (aliases.find(header) != aliases.end()) {
-                cout << "alias found, rewriting..." << endl;
+                cout << "alias found, rewriting..." << endl; // lets update this so that it will tell you what is being renamed EX: "found NAME, replacing with ALIAS..."
                 line = ">" + aliases.at(header);
             }
 
