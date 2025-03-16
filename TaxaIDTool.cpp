@@ -1,3 +1,9 @@
+
+// Developer: Mira'Onyx Diagnostics
+// Development Team: Andrew Budge
+// Desc.: A tool to modify fasta files by renaming taxa ID's or removeing seqences by ID's
+// inputs: Fasta file, file containing aliases, file containg sequences ID's to remove, file to write out too
+
 #include <iostream>
 #include <fstream>
 #include <unordered_map>
@@ -10,7 +16,7 @@ using namespace std;
 
 // read the alias file and store mappings
 unordered_map<string, string> loadAliases(const string& aliasFile) {
-    cout << "Creating alias map..." << endl;
+    cout << "Reading in aliases..." << endl;
     unordered_map<string, string> aliases;
     ifstream file(aliasFile);
     string line;
@@ -26,6 +32,7 @@ unordered_map<string, string> loadAliases(const string& aliasFile) {
 
 // read the remove file and store ID's to be removed
 set<string> loadRemoveHeaders(const string& removeFile) {
+    cout << "reading in ID's that will be removed..." << endl;
     set<string> removeHeaders;
     ifstream file(removeFile);
     string line;
@@ -37,9 +44,8 @@ set<string> loadRemoveHeaders(const string& removeFile) {
 }
 
 // process the input FASTA file
-void processFasta(const string& inputFile, const string& outputFile,
-                  const unordered_map<string, string>& aliases,
-                  const set<string>& removeHeaders) {               
+void processFasta(const string& inputFile, const string& outputFile, const unordered_map<string, string>& aliases, const set<string>& removeHeaders) {               
+    // Dec Vars.
     ifstream input(inputFile);
     ofstream output(outputFile);
     string line;
@@ -57,7 +63,7 @@ void processFasta(const string& inputFile, const string& outputFile,
                 line = ">" + aliases.at(header);
             }
 
-            // Check if the header should be removed
+            // Check if the ID should be removed
             if (removeHeaders.find(header) != removeHeaders.end()) {
                 isHeader = false;  // Skip this sequence
                 removeThisSeq = true;
@@ -81,7 +87,6 @@ void processFasta(const string& inputFile, const string& outputFile,
 int main(int argc, char* argv[]) {
     string inputFile, outputFile, aliasFile, removeFile;
     int opt;
-
     // Parse command line arguments
     while ((opt = getopt(argc, argv, "i:o:a:r:")) != -1) {
         switch (opt) {
